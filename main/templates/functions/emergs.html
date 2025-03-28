@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+<h3 class="page-title">
+  <span class="page-title-icon bg-gradient-primary text-white me-2">
+    <i class="mdi mdi-plus-circle-outline"></i>
+  </span> Emergencies
+</h3>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+    </li>
+  </ul>
+</nav>
+</div>
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Obstacles</h4>
+      <p class="card-description"> 
+      </p>
+<div style="overflow-x: auto;">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Image</th>
+      <th>Description</th>
+      <!-- <th>Image</th> -->
+      <th>Time</th>
+      <th>Reported By</th>
+      <th>Status</th>
+      <th>View</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for obstacle in obstacles %}
+    <tr>
+      <td>{{obstacle.id}}</td>
+      <td>
+        <img src="{{obstacle.image.url}}"></img>
+
+      </td>
+
+      <td>{{obstacle.description}}</td>
+      <!-- <td>{{obstacle.image}}</td> -->
+      <td>{{obstacle.time}}</td>
+      <td>{{obstacle.reported_by}}</td>
+      <td>{{obstacle.status}}</td>
+
+      <td>
+        <a href="/view-obstacles/{{obstacle.id}}">
+        <button type="button" class="btn btn-inverse-info btn-icon">
+        <i class="mdi mdi-arrow-expand"></i>
+      </button>
+    </a>
+      </td>
+ 
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<br><br>
+
+
+</div>
+</div> 
+</div> 
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Incidents</h4>
+      <p class="card-description">  
+      </p>
+<div style="overflow-x: auto;">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Vehicle</th>
+      <th>Incident Type</th>
+      {% comment %} <th>Description</th> {% endcomment %}
+      <th>Date</th>
+      <th>Reported By</th>
+      <th>Status</th>
+      <th>View</th>
+  
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for incident in incidents %}
+    <tr>
+      <td>{{incident.id}}</td>
+      <td>{{incident.vehicle}}</td>
+      <td>{{incident.type}}</td>
+      {% comment %} <td>{{incident.description}}</td> {% endcomment %}
+      <td>{{incident.date}}</td>
+      <td>{{incident.reported_by}}</td>
+      <td>{{incident.status}}</td>
+      <td>
+        <a href="/view-incidents/{{incident.id}}">
+        <button type="button" class="btn btn-inverse-info btn-icon">
+        <i class="mdi mdi-arrow-expand"></i>
+        </button>
+        </a>
+      </td>
+
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+<br>
+
+
+</div>
+</div> 
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+<h3 class="page-title">
+  <span class="page-title-icon bg-gradient-primary text-white me-2">
+    <i class="mdi mdi-calendar"></i>
+  </span> Manage Train Schedule
+</h3>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <span></span> Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<form action="{% url 'create-schedual' %}" method="POST" class="forms-sample">
+  {% csrf_token %}
+  {{form.errors}}
+
+  <div class="form-group">
+    <label for="vehicle">Vehicle</label>
+    <select class="form-control" id="vehicle" name="vehicle">
+      {% for vehicle in vehicles %}
+        <option value="{{ vehicle.id }}">{{ vehicle.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Departure</label>
+    <input type="time" id="departure" class="form-control" name="departure">
+    <br>
+  </div>
+  <div class="form-group">
+    <label>Arrival</label>
+    <input type="time" id="arrival" class="form-control" name="arrival">
+    <br>
+  </div>
+
+  <div class="form-group">
+    <label>Frequency</label>
+    <input type="number" id="frequency" class="form-control" name="frequency">
+    <br>
+  </div>
+  <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+  <button class="btn btn-light">Cancel</button>
+</form>
+</div> </div> </div> 
+{% endblock %}

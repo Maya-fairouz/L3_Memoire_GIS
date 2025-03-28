@@ -1,0 +1,480 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+<h3 class="page-title">
+  <span class="page-title-icon bg-gradient-primary text-white me-2">
+    <i class="mdi mdi-chart-bar"></i>
+  </span> Statistics
+</h3>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+    </li>
+  </ul>
+</nav>
+</div>
+
+
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Line chart</h4>
+        <canvas id="lineChart" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="{% static 'assets/vendors/js/vendor.bundle.base.js'%}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="{% static 'assets/vendors/chart.js/Chart.min.js'%}"></script>
+  <!-- End plugfor this page -->
+  <script src="{% static 'assets/js/off-canvas.js'%}"></script>
+  <script src="{% static 'assets/js/hoverable-collapse.js'%}"></script>
+  <script src="{% static 'assets/js/misc.js'%}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page -->
+  {% comment %} <script src="{% static 'assets/js/chart.js' %}"></script> {% endcomment %}
+
+<script>
+  function getSpeed() {
+    return fetch('/vehicle-positions/')
+      .then(response => response.json())
+      .then(data => {
+        return data.vehicles.map(vehicle => vehicle.speed);
+      });
+  }
+  
+  // Function to create and update the line chart
+  function createLineChart(speedData) {
+    var ctx = document.getElementById('speedChart');
+  
+    var chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [], // You can provide labels for the x-axis if needed
+        datasets: [
+          {
+            label: 'Speed',
+            data: speedData,
+            borderColor: 'blue',
+            backgroundColor: 'rgba(0, 0, 255, 0.2)',
+            fill: 'start',
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
+
+    // Update the chart with new data
+    function updateChart() {
+      getSpeed().then(newSpeedData => {
+        chart.data.datasets[0].data = newSpeedData;
+        chart.update();
+      });
+    }
+  
+    // Update the chart every second
+    setInterval(updateChart, 1000);
+  }
+  
+  // Call the function to create the line chart
+  getSpeed().then(speedData => {
+    createLineChart(speedData);
+  });
+  'use strict';
+    var data = {
+      labels: ["", "2014", "2014", "20915", "2016", "2017"],
+      datasets: [{
+        label: 'Speed',
+        data: [1, 2, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+
+        ],
+        borderWidth: 1,
+        fill: false
+      }]
+    };
+
+    var options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      legend: {
+        display: false
+      },
+      elements: {
+        point: {
+          radius: 0
+        }
+      }
+  
+    };
+   
+
+    // Get context with jQuery - using jQuery's .get() method.
+ 
+    if ($("#lineChart").length) {
+      var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+      var lineChart = new Chart(lineChartCanvas, {
+        type: 'line',
+        data: data,
+        options: options
+      });
+    }
+  // ill replace this bitch with the code from script stats.html,
+  // till i get internet and fix the views
+
+
+  // xlabels.push(year)
+  var doughnutPieData = {
+    datasets: [{
+      data: [30, 21],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+      'Pink',
+      'Blue',
+      'Yellow',
+    ]
+  };
+
+  var doughnutPieOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+  };
+  
+    if ($("#pieChart").length) {
+      var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: doughnutPieData,
+        options: doughnutPieOptions
+      });
+    }
+
+
+  
+
+  
+  
+  
+  
+// Get the canvas element and initialize the chart
+{% comment %} var ctx = document.getElementById('line-chart');
+var chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [], // Empty array for x-axis labels
+    datasets: [{
+      label: 'Speed',
+      data: [], // Empty array for speed data
+      borderColor: 'blue',
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: 'Time'
+        }
+      },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: 'Speed'
+        }
+      }
+    }
+  }
+}); {% endcomment %}
+
+// Update the chart with the speed data
+{% comment %} function updateChart(speed) {
+  // Add the new speed value to the dataset's data array
+  chart.data.datasets[0].data.push(speed);
+
+  // Add a label for the x-axis (e.g., timestamp or index)
+  var currentTime = new Date().toLocaleTimeString();
+  chart.data.labels.push(currentTime);
+
+  // Limit the number of data points shown (e.g., last 10 seconds)
+  var maxDataPoints = 10;
+  if (chart.data.datasets[0].data.length > maxDataPoints) {
+    chart.data.datasets[0].data.shift();
+    chart.data.labels.shift();
+  }
+
+  // Update the chart
+  chart.update();
+} {% endcomment %}
+
+// Call the updateChart function with the speed value every second
+//setInterval(function() {
+//  var speed = getSpeed(); // Assuming getSpeed fetches the speed value
+//  updateChart(speed);
+//}, 1000);
+
+setInterval(() => getSpeed(), 1000)
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {% comment %} 
+  
+
+  $(function () {
+
+  {% for vehicle in vehicles %}
+  
+
+  {% endfor %}
+    /* ChartJS
+     * -------
+     * Data and config for chartjs
+     */
+    'use strict';
+    var data = {
+      labels: ["20144", "2014", "2014", "20915", "2016", "2017"],
+      datasets: [{
+        label: '# of Votes',
+        data: [10, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1,
+        fill: false
+      }]
+    };
+
+    var options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      legend: {
+        display: false
+      },
+      elements: {
+        point: {
+          radius: 0
+        }
+      }
+  
+    };
+   
+
+    // Get context with jQuery - using jQuery's .get() method.
+ 
+    if ($("#lineChart").length) {
+      var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+      var lineChart = new Chart(lineChartCanvas, {
+        type: 'line',
+        data: data,
+        options: options
+      });
+    }
+  // ill replace this bitch with the code from script stats.html,
+  // till i get internet and fix the views
+
+
+  // xlabels.push(year)
+  var doughnutPieData = {
+    datasets: [{
+      data: [30, 21],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+      'Pink',
+      'Blue',
+      'Yellow',
+    ]
+  };
+
+  var doughnutPieOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+  };
+  
+    if ($("#pieChart").length) {
+      var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: doughnutPieData,
+        options: doughnutPieOptions
+      });
+    }
+
+
+  });
+
+  
+  
+  
+  
+  
+  <script>
+    var speeds = {{ speeds|safe }};
+    var vehicles = {{ vehicles|safe }};
+
+    // Line Chart
+    if ($("#lineChart").length) {
+      var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+      var lineChart = new Chart(lineChartCanvas, {
+        type: 'line',
+        data: {
+          labels: vehicles,
+          datasets: [{
+            label: 'Speed',
+            data: speeds,
+            fill: false,
+            borderColor: 'rgba(0, 123, 255, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    // Pie Chart
+    if ($("#pieChart").length) {
+      var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          labels: vehicles,
+          datasets: [{
+            data: [1, 2, 3, 4, 5],  // Replace with actual data
+            backgroundColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    }
+  </script> {% endcomment %}
+{% endblock %}

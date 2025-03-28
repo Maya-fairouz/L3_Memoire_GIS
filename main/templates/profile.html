@@ -1,0 +1,76 @@
+
+
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+<h3 class="page-title">
+  <span class="page-title-icon bg-gradient-primary text-white me-2">
+    <i class="mdi mdi-account"></i>
+  </span> Profile  
+</h3>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+    </li>
+  </ul>
+</nav>
+</div>
+<form action="" method="POST" enctype="multipart/form-data" class="forms-sample">
+    {% csrf_token %}
+    
+
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" value="{{user}}" id="location" class="form-control" name="location" readonly>
+        <br>
+    
+      </div>
+    
+    <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" value="{{user.profile.name}}" id="name" class="form-control" name="name" readonly>
+        <br>
+    
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" value="{{user.profile.email}}" id="email" class="form-control" name="email" readonly>
+        <br>
+    
+      </div>
+      <div class="form-group">
+        <label>Phone number</label>
+        <input type="number" value="{{user.profile.phone}}" id="phone" class="form-control" name="phone" readonly>
+        <br>
+    
+      </div>
+    
+  
+    <div class="form-group">
+      <label>image</label>
+      <div class="custom-file">
+        <input type="text" class="form-control file-upload-info" disabled placeholder="File uploaded">
+         <br>      
+        <img style= "height:300px; width:300px"src="{{user.profile.image.url}}"></img>
+  
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="exampleTextarea1">Adress</label>
+      <textarea class="form-control" id="adress" name="adress" rows="3" readonly>{{user.profile.adress}}</textarea>
+    </div> 
+
+    <button type="submit" class="btn btn-gradient-primary me-2">OK</button>
+
+  </form>
+
+
+{% endblock %}
+
+
+
+

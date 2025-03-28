@@ -1,0 +1,139 @@
+{% load static %}
+
+<!-- partial:partials/_sidebar.html -->
+     <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item nav-profile">
+            <a href="#" class="nav-link">
+              <div class="nav-profile-image">
+                <img src="{{user.profile.image.url}}" alt="profile">
+                <span class="login-status online"></span>
+                <!--change to offline or busy as needed-->
+              </div>
+              <div class="nav-profile-text d-flex flex-column">
+                <span class="font-weight-bold mb-2">{{user.profile.name}}</span>
+                <span class="text-secondary text-small">{{request.user.groups.first.name }}</span>
+              </div>
+              <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+            </a>
+          </li>
+          
+          {% for group in user.groups.all %}
+
+              {% if group.name == 'depotmanager'  %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                  <span class="menu-title">Dashboard</span>
+                  <i class="mdi mdi-home menu-icon"></i>
+                </a>
+              </li>
+    
+
+              <li class="nav-item">
+                <a class="nav-link"  href="{% url 'maintenance-team' %}" >
+                  <span class="menu-title">Manage Team </span>
+                  <i class="mdi mdi-account-multiple menu-icon"></i>
+                </a>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'maintenance-schedual' %}">
+                  <span class="menu-title">Schedule Maintenance</span>
+                  <i class="mdi mdi-calendar-clock menu-icon"></i>
+                </a>
+                
+              </li>
+              
+              {% elif group.name == 'fieldagents'%}
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                  <span class="menu-title">Dashboard</span>
+                  <i class="mdi mdi-home menu-icon"></i>
+                </a>
+              </li>
+    
+              <li class="nav-item">
+                <a class="nav-link"  href="{% url 'obstacles' %}" >
+                  <span class="menu-title">Report Obstacles</span>
+                
+                  <i class="mdi mdi-content-paste menu-icon"></i>
+                </a>
+
+              {% elif group.name == 'maintenanceagents'%}
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                  <span class="menu-title">Dashboard</span>
+                  <i class="mdi mdi-home menu-icon"></i>
+                </a>
+              </li>
+    
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'maintenance-schedual' %}">
+                  <span class="menu-title">Maintenance Schedule</span>
+                  <i class="mdi mdi-bulletin-board menu-icon"></i>
+                </a>
+              </li>
+    
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'vehicle-status' %}" >
+                  <span class="menu-title"> Tram Status</span>
+                
+                  <i class="mdi mdi-tram menu-icon"></i>
+                </a>
+              
+              </li>
+
+              {% elif group.name == 'traincontrollers'%}
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                  <span class="menu-title">Dashboard</span>
+                  <i class="mdi mdi-home menu-icon"></i>
+                </a>
+              </li>
+    
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'train-schedual' %}">
+                  <span class="menu-title">Manage Train Schedule</span>
+                 
+                  <i class="mdi mdi mdi-calendar menu-icon"></i>
+                </a>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'incidents' %}" >
+                  <span class="menu-title">Manage Incidents </span>
+                  <i class="mdi mdi-image-broken-variant menu-icon"></i>
+                  </a>
+                
+              </li>
+            
+
+              {% elif group.name == 'admin'%}
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                  <span class="menu-title">Dashboard</span>
+                  <i class="mdi mdi-home menu-icon"></i>
+                </a>
+              </li>
+    
+              <li class="nav-item">
+                <a class="nav-link"  href="{% url 'stats' %}" >
+                  <span class="menu-title">Statistics</span>
+                
+                  <i class="mdi mdi-chart-bar menu-icon"></i>
+                </a>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'emergencies' %}">
+                    <span class="menu-title">Emergencies</span>
+                    <i class="mdi mdi-plus-circle-outline menu-icon"></i>
+                  </a>
+                  
+                </li>
+                {% endif %}
+
+            {% endfor %}
+
+
+
+        </ul>
+      </nav>

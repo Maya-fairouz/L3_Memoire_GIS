@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+<h3 class="page-title">
+  <span class="page-title-icon bg-gradient-primary text-white me-2">
+    <i class="mdi mdi-tram"></i>
+  </span> Tram Status 
+</h3>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+    </li>
+  </ul>
+</nav>
+</div>
+
+
+<form action="/update-status/{{status.id}}" method="POST"  class="forms-sample">
+    {% csrf_token %}
+    {{form.errors}}
+    
+    <div class="form-group">
+      <label for="vehicle">Vehicle</label>
+      <select  class="form-control" id="vehicle" name="vehicle">
+        <option value=""> {{status.vehicle}}</option>
+        {% for vehicle in vehicles %}
+          <option value="{{ vehicle.id }}">{{ vehicle.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  
+    <div class="form-group">
+        <label for="status">Status</label>
+        <select class="form-control" id="status" name="status">
+            <option value=""> {{status.status}}</option>
+            {% for choice in form.status.field.choices %}
+            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+            {% endfor %}
+           {% comment %} 1111 aint done yet  {% endcomment %}
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="reported-by">Reported By</label>
+        <input type="text" id="reported-by" class="form-control" name="reported_by" value="{{ user.username }}" readonly>
+    </div>
+    
+    
+      <div class="form-group">
+        <label for="exampleTextarea1">Description</label>
+        <textarea  class="form-control" id="exampleTextarea1" name="description" rows="4">{{status.description}}</textarea>
+      </div> 
+    
+
+  
+    <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+    <button class="btn btn-light">Cancel</button>
+  </form>
+{% endblock %}

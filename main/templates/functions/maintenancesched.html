@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+<h3 class="page-title">
+  <span class="page-title-icon bg-gradient-primary text-white me-2">
+    <i class="mdi mdi-calendar-clock"></i>
+  </span> Schedule Maintenance
+</h3>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<div>
+  <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw"><a  href="{% url 'create-maintenance' %}" style =" text-decoration: none; color:white;"> Add a schedule +</a></button>
+</div>
+<br>
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Maintenance Schedule </h4>
+      <p class="card-description"> 
+      </p>
+      <div style="overflow-x: auto;">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th> Id </th>
+            <th> Vehicle </th>
+            <th> Type  </th>
+            <th> Date </th>
+            <th> Team </th>
+            <th> Edit </th>
+            <th> Delete </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for maintenance in maintenances %}
+          <tr>
+            <td> {{maintenance.id}} </td>
+            <td> {{maintenance.vehicle}} </td>
+            <td> {{maintenance.type}} </td>
+            <td> {{maintenance.date}} </td>
+            <td> {{maintenance.team}} </td>
+            <td>
+              <a href="edit-maintenance/{{maintenance.id}}">
+                <button type="button" class="btn btn-inverse-success btn-icon">
+                <i class="mdi mdi-border-color"></i>
+              </button>
+            </a>
+              
+            </td>
+            <td>
+              <a href="/delete-maintenance/{{maintenance.id}}">
+              <button type="button" class="btn btn-inverse-danger btn-icon">
+                <i class="mdi mdi-delete"></i>
+              </button>
+            </a>
+            </td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

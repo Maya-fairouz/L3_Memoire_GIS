@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h3 class="page-title">
+  <span class="page-title-icon bg-gradient-primary text-white me-2">
+    <i class="mdi mdi-content-paste"></i>
+  </span> Report Obstacle 
+</h3>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<form action="/update-obstacle/{{obstacle.id}}" method="POST" enctype="multipart/form-data" class="forms-sample">
+  {% csrf_token %}
+  
+  <div class="form-group">
+    <label>Location</label>
+    <input type="text" value="{{obstacle.location}}" id="location" class="form-control" name="location" readonly>
+    <br>
+    <div id="map" style="height: 250px; width: 250px;"></div>
+  </div>
+
+
+  <div class="form-group">
+    <label>File Upload</label>
+    <div class="custom-file">
+      <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+       <br>
+      <input type="file" multiple  value="{{obstacle.image.url}}" class="file-upload-default" id="fileInput" name="image">
+      <img src="{{obstacle.image.url}}"></img>
+     <br>
+     <br>
+      <label class="file-upload-browse btn btn-gradient-primary" for="fileInput">Choose a file</label>
+    </div>
+    <td>
+    </td>
+  </div>
+  <div class="form-group">
+    <label for="exampleTextarea1">Description</label>
+    <textarea class="form-control"  value="{{obstacle.description}}" id="exampleTextarea1" name="description" rows="4"></textarea>
+  </div> 
+
+  <div class="form-group">
+    <label for="status">Status</label>
+    <select class="form-control" id="status" name="status">
+      <option value="Pending">Pending</option>
+      <option value="Fixed">Fixed</option>
+  
+    </select>
+  </div>
+
+
+  <div class="form-group">
+    <label for="reported-by">Reported By</label>
+    <input type="text"  value ="{{obstacle.reported_by}}"id="reported-by" class="form-control" name="reported_by" value="{{ user.username }}" readonly>
+  </div>
+
+
+  
+
+  <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+  <button class="btn btn-light">Cancel</button>
+</form>
+  <script>
+
+    let map =L.map('map').setView([36.3071,6.5963] , 12);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var marker;
+    map.on('click',(event)=>{
+      console.log(event)
+    })
+
+    map.on('click', function (e) {
+      if (marker) {
+        map.removeLayer(marker);
+      }
+      marker = L.marker(e.latlng).addTo(map);
+      document.getElementById('location').value = e.latlng.lat + ', ' + e.latlng.lng;
+    });
+    
+    $(document).on('submit', 'form', function(e) {
+      e.preventDefault();
+    
+      // Retrieve the form field values
+      var location = document.getElementById('location').value;
+      var description = document.getElementById('exampleTextarea1').value;
+    
+      // Perform any additional processing or validation here
+    
+      // Submit the form data via AJAX or regular form submission
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: {
+          location: location,
+          description: description,
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response) {
+          // Handle the success response
+        },
+        error: function(response) {
+          // Handle the error response
+        }
+      });
+    });
+  </script>
+{% endblock %}

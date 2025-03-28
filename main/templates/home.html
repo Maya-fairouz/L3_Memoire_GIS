@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h3 class="page-title">
+  <span class="page-title-icon bg-gradient-primary text-white me-2">
+    <i class="mdi mdi-home"></i>
+  </span> Dashboard
+</h3>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<div id="map" style="height:500px; width: 100%;">
+ <p>mapp from home.html </p>
+</div>
+{{ vehicles|json_script:"vehicle-json"}}
+{% comment %} {{ location_station|json_script:"station-json"}} {% endcomment %}
+
+
+
+
+{% block scripts %}
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let map = createMap([36.3071,6.5963] , 12);
+
+        let vehicles = JSON.parse(document.getElementById('vehicle-json').textContent) 
+        
+        let markerFeatureGroup = L.featureGroup().addTo(map);
+        let stationFeatureGroup = L.featureGroup().addTo(map);
+        let alertFeatureGroup = L.featureGroup().addTo(map);
+        
+
+        for(let vehicle of vehicles){
+            L.marker([vehicle.latitude,vehicle.longitude]).addTo(markerFeatureGroup);
+        }
+        setInterval(() => updateMarkers(markerFeatureGroup), 1000)
+
+        stationMarkers(stationFeatureGroup);
+
+       alertMarkers(alertFeatureGroup);
+       alertMarkers2(alertFeatureGroup);
+
+        
+
+    })
+ </script>
+
+ 
+ {% comment %} <div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Inverse table</h4>
+      <p class="card-description"> Add class <code>.table-dark</code>
+      </p>
+      <div style="overflow-x: auto;">
+
+      <table class="table table-dark">
+        <thead>
+    <tr>
+      <th> ID </th>
+      <th> Vehicle</th>
+      <th> Speed </th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for vehicle in vehicles %}
+    <tr>
+      <td>{{vehicle.id}}</td>
+      <td>{{vehicle.name}}</td>
+      <td>{{vehicle.speed}}</td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table> {% endcomment %}
+ <br><br><br>
+
+
+{% endblock %}
+{% endblock %}

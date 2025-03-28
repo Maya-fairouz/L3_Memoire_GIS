@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h3 class="page-title">
+    <span class="page-title-icon bg-gradient-primary text-white me-2">
+      <i class="mdi mdi-calendar-clock"></i>
+    </span> Schedule Maintenance
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+      </li>
+    </ul>
+  </nav>
+  </div>
+
+<form action="{% url 'create-maintenance' %}" method="POST"  class="forms-sample">
+  {% csrf_token %}
+  {{form.errors}}
+  
+  <div class="form-group">
+    <label for="vehicle">Vehicle</label>
+    <select class="form-control" id="vehicle" name="vehicle">
+      {% for vehicle in vehicles %}
+        <option value="{{ vehicle.id }}">{{ vehicle.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleTextarea1">Type</label>
+    <input type="text"  class="form-control" id="exampleTextarea1" name="type" >
+  </div> 
+
+
+<div class="form-group">
+    <label for="exampleTextarea1">Date</label>
+    <input type="date"  class="form-control" id="exampleTextarea1" name="date" >
+  </div> 
+
+
+  <div class="form-group">
+    <label for="exampleTextarea1">Team</label>
+    <input type="text"  class="form-control" id="exampleTextarea1" name="team" >
+  </div> 
+
+
+
+  <div class="form-group">
+    <label for="reported-by">Reported By</label>
+    <input type="text" id="reported-by" class="form-control" name="reported_by" value="{{ user.username }}" readonly>
+  </div>
+
+
+  
+
+  <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+  <button class="btn btn-light">Cancel</button>
+</form>
+  <script>
+
+    let map =L.map('map').setView([36.3071,6.5963] , 12);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var marker;
+    map.on('click',(event)=>{
+      console.log(event)
+    })
+
+    map.on('click', function (e) {
+      if (marker) {
+        map.removeLayer(marker);
+      }
+      marker = L.marker(e.latlng).addTo(map);
+      document.getElementById('location').value = e.latlng.lat + ', ' + e.latlng.lng;
+    });
+    
+    $(document).on('submit', 'form', function(e) {
+      e.preventDefault();
+    
+      // Retrieve the form field values
+      var location = document.getElementById('location').value;
+      var description = document.getElementById('exampleTextarea1').value;
+    
+      // Perform any additional processing or validation here
+    
+      // Submit the form data via AJAX or regular form submission
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: {
+          location: location,
+          description: description,
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response) {
+          // Handle the success response
+        },
+        error: function(response) {
+          // Handle the error response
+        }
+      });
+    });
+  </script>
+{% endblock %}
