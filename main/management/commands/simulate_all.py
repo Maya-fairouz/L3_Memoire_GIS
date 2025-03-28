@@ -4,7 +4,6 @@ import random
 import time
 from django.core.management.base import BaseCommand
 from main.models import Vehicle
-
 sumo_binary = "sumo-gui"
 sumo_cmd = [sumo_binary, "-c", "C:/Users/ETS MESSAHEL/Sumo/2023-05-08-21-05-58/osm.sumocfg"]
 
