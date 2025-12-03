@@ -1,11 +1,11 @@
-# 🚆 GIS-Based Railway Management System 
+#  GIS-Based Railway Management System 
 
 A **Geographic Information System (GIS)** and **SUMO-powered** web application designed to support the management operations of Tramway.  
 This project was developed as part of the **Bachelor’s Thesis (Licence 3 – 2023)** at **University Constantine 2 – AbdelHamid Mehri**.
 
 ---
 
-## 🧭 Project Overview
+##  Project Overview
 
 This system aims to **digitalize and optimize the management of Algeria’s railway infrastructure** using GIS technology.  
 The web platform provides a **centralized control interface** to monitor, analyze, and manage railway operations, including trains, maintenance, field agents, and incidents — with **real-time simulation** powered by **SUMO**.
@@ -14,7 +14,7 @@ It replicates the functions of a **Central Control Panel (CCP)** for real-time s
 
 ---
 
-## 🎯 Objectives
+##  Objectives
 
 - Design and implement a **GIS-based management platform** for SETRAM.  
 - Simulate and visualize **train movement** using **SUMO** (Simulation of Urban MObility).  
@@ -24,7 +24,7 @@ It replicates the functions of a **Central Control Panel (CCP)** for real-time s
 
 ---
 
-## 👥 System Actors
+## System Actors
 
 | Actor | Description | Main Responsibilities |
 |-------|--------------|------------------------|
@@ -36,19 +36,19 @@ It replicates the functions of a **Central Control Panel (CCP)** for real-time s
 
 ---
 
-## ⚙️ Features
+## Features
 
-✅ Interactive GIS dashboard (Leaflet/Folium)  
-✅ SUMO-driven train and vehicle simulation  
-✅ Role-based authentication and dashboards  
-✅ Incident and maintenance management  
-✅ Notification and communication system  
-✅ Real-time location monitoring  
-✅ Database schema with agents, trains, incidents, maintenance, obstacles, and notifications  
+ Interactive GIS dashboard (Leaflet/Folium)  
+ SUMO-driven train and vehicle simulation  
+ Role-based authentication and dashboards  
+ Incident and maintenance management  
+ Notification and communication system  
+ Real-time location monitoring  
+ Database schema with agents, trains, incidents, maintenance, obstacles, and notifications  
 
 ---
 
-## 🧰 Technologies Used
+##  Technologies Used
 
 | Category | Technology |
 |-----------|-------------|
